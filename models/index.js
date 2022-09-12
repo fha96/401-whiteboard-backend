@@ -7,17 +7,26 @@ const post = require('./post.model');
 const {Sequelize, DataTypes} = require('sequelize');
 
 // prepare database url (locally and remotely)
-const DATA_BASE_URL = process.env.DATA_BASE_SERVER || 'postgres://fahadzidan1@localhost:5432/news';
+const DATA_BASE_URL = process.env.DATABASE_URL || 'postgres://fahadzidan1@localhost:5432/news';
 
 // below I used SSL (secure socket layer) 
 
 /*SSL enables client and server applications to communicate in a way that is designed
  to prevent eavesdropping, tampering, and message forgery. */
 
+ let sequelizeOptions = {
 
+    dialectOptions : {
+        ssl : {
+            require : true,
+            rejectUnauthorized: false
+        }
+    }
+
+};
 
 // create instance from Sequelize to prepare the connection
-const sequelize = new Sequelize(DATA_BASE_URL);
+const sequelize = new Sequelize(DATA_BASE_URL,sequelizeOptions);
 
 
 // export
