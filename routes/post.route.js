@@ -3,7 +3,7 @@
 
 const express = require('express');
 const {Post} = require('../models/index');
-const {commentModel} = require('../models/index'); 
+const {Models} = require('../models/index'); 
 const router = express.Router();
 
 //get all posts
@@ -21,9 +21,13 @@ router.delete('/post/:id',deletePost);
 
 // when you use sequelize don't forget about promises because its promise based
 async function getAllPosts(req, res) {
-    let allPosts = await Post.readWithComments(commentModel);
+    let allPosts = await Post.readWithComments(Models.commentModel);
     res.status(200).send(allPosts);
 }
+// async function getAllPosts(req, res) {
+//     let allPosts = await Post.read();
+//     res.status(200).send(allPosts);
+// }
 
 async function getOnePost(req, res) {
 let id = req.params.id;

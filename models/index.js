@@ -3,10 +3,11 @@
 // Here I am going to use ORM (object relational mapper) 
 //using sequelize package (library) to communicate with my DB (manipulate data)
 // First require sequelize and npm i pg sequelize : pg==> driver for postgres
-const post = require('./post.model');
 const {Sequelize, DataTypes} = require('sequelize');
+const post = require('./post.model');
 const comment = require('./comment.model');
 const CommentRoutes = require('../collections/user-comment-routes');
+
 // prepare database url (locally and remotely)
 const DATA_BASE_URL = process.env.DATABASE_URL || 'postgres://fahadzidan1@localhost:5432/news';
 
