@@ -3,8 +3,10 @@
 // Here I am going to use ORM (object relational mapper) 
 //using sequelize package (library) to communicate with my DB (manipulate data)
 // First require sequelize and npm i pg sequelize : pg==> driver for postgres
-const post = require('./post.model');
 const {Sequelize, DataTypes} = require('sequelize');
+const post = require('./post.model');
+const comment = require('./comment.model');
+const CommentRoutes = require('../collections/user-comment-routes');
 
 // prepare database url (locally and remotely)
 const DATA_BASE_URL = process.env.DATABASE_URL || 'postgres://fahadzidan1@localhost:5432/news';
@@ -28,9 +30,21 @@ const DATA_BASE_URL = process.env.DATABASE_URL || 'postgres://fahadzidan1@localh
 // create instance from Sequelize to prepare the connection
 const sequelize = new Sequelize(DATA_BASE_URL,sequelizeOptions);
 
+const postModel = post(sequelize, DataTypes);
+const commentModel = comment(sequelize, DataTypes);
+
+postModel.hasMany(commentModel,{foreignKey: 'postID', sourceKey:'id'});
+commentModel.belongsTo(postModel,{foreignKey: 'postID', targetKey: 'id'});
+
+
+const postCollection = new CommentRoutes(postModel);
+const commentCollection = new CommentRoutes(commentModel);
+
 
 // export
 module.exports = {
     db:sequelize,
-    Post:post(sequelize, DataTypes)   
+    Post:postCollection,
+    Comment:commentCollection,
+    Models:{postModel,commentModel}
 }

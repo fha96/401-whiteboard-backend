@@ -10,11 +10,11 @@ const req = supertest(server.app);
 
 describe('testing CRUD operations', () => {
 
-     it('test getting all posts in array of objects',async () => {
+     it('test getting all posts with comments in array of objects',async () => {
         let res = await req.get('/post');
         console.log(res.body);
         expect(typeof res.body).toEqual('object');
-        expect()
+        expect(res.statusCode).toEqual(200)
      });
      it('test getting one post ',async () => {
         let res = await req.get('/post/1');
@@ -47,7 +47,19 @@ describe('testing CRUD operations', () => {
         // expect(res.text).toEqual("item deleted");
         expect(res.statusCode).toBe(204);
      });
-     
+
+
+     it('test Add a new comment using POST ', async () => {
+      const commentData = {
+         description:" test ",
+         name:"fha",
+         postID:"2"
+      }
+      let res = await req.post('/comment/2').send(commentData);
+      console.log(res.body);
+      expect(typeof res).toEqual('object');
+     });
+
      
 
 
