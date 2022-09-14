@@ -16,19 +16,19 @@ const DATA_BASE_URL = process.env.DATABASE_URL || 'postgres://fahadzidan1@localh
 /*SSL enables client and server applications to communicate in a way that is designed
  to prevent eavesdropping, tampering, and message forgery. */
 
-//  let sequelizeOptions = {
+ let sequelizeOptions = {
 
-//     dialectOptions : {
-//         ssl : {
-//             require : true,
-//             rejectUnauthorized: false
-//         }
-//     }
+    dialectOptions : {
+        ssl : {
+            require : true,
+            rejectUnauthorized: false
+        }
+    }
 
-// };
+};
 
 // create instance from Sequelize to prepare the connection
-const sequelize = new Sequelize(DATA_BASE_URL);
+const sequelize = new Sequelize(DATA_BASE_URL,sequelizeOptions);
 
 const postModel = post(sequelize, DataTypes);
 const commentModel = comment(sequelize, DataTypes);

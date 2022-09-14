@@ -37,6 +37,7 @@ res.status(200).send(post);
 
 async function addPost(req, res) {
     let data = req.body;
+    console.log(data);  
     console.log("data",data);
     await Post.create(data);
     let posts = await Post.read();
