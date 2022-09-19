@@ -19,12 +19,12 @@ const DATA_BASE_URL = process.env.DATABASE_URL || 'postgres://fahadzidan1@localh
 
  let sequelizeOptions = {
 
-    // dialectOptions : {
-    //     ssl : {
-    //         require : true,
-    //         rejectUnauthorized: false
-    //     }
-    // }
+    dialectOptions : {
+        ssl : {
+            require : true,
+            rejectUnauthorized: false
+        }
+    }
 
 };
 
