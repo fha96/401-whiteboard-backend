@@ -6,6 +6,7 @@
 const {Sequelize, DataTypes} = require('sequelize');
 const post = require('./post.model');
 const comment = require('./comment.model');
+const user = require('./user.model');
 const CommentRoutes = require('../collections/user-comment-routes');
 
 // prepare database url (locally and remotely)
@@ -32,6 +33,7 @@ const sequelize = new Sequelize(DATA_BASE_URL,sequelizeOptions);
 
 const postModel = post(sequelize, DataTypes);
 const commentModel = comment(sequelize, DataTypes);
+const userModel = user(sequelize,DataTypes);
 
 postModel.hasMany(commentModel,{foreignKey: 'postID', sourceKey:'id'});
 commentModel.belongsTo(postModel,{foreignKey: 'postID', targetKey: 'id'});
@@ -40,11 +42,11 @@ commentModel.belongsTo(postModel,{foreignKey: 'postID', targetKey: 'id'});
 const postCollection = new CommentRoutes(postModel);
 const commentCollection = new CommentRoutes(commentModel);
 
-
 // export
 module.exports = {
     db:sequelize,
     Post:postCollection,
     Comment:commentCollection,
-    Models:{postModel,commentModel}
+    User:userModel,
+    Models:{postModel, commentModel}
 }
