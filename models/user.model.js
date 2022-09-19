@@ -1,7 +1,7 @@
 'use strict';
 
 
-const user = async(sequelize, DataTypes) => sequelize.define('user', {
+const user = (sequelize, DataTypes) => sequelize.define('user', {
     userName: {
         type: DataTypes.STRING,
         allowNull: false,

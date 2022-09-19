@@ -41,13 +41,12 @@ commentModel.belongsTo(postModel,{foreignKey: 'postID', targetKey: 'id'});
 
 const postCollection = new CommentRoutes(postModel);
 const commentCollection = new CommentRoutes(commentModel);
-const userCollection = new CommentRoutes(userModel);
 
 // export
 module.exports = {
     db:sequelize,
     Post:postCollection,
     Comment:commentCollection,
-    User:userCollection,
-    Models:{postModel, commentModel, userCollection}
+    User:userModel,
+    Models:{postModel, commentModel}
 }

@@ -29,7 +29,7 @@ class CommentRoutes {
         try {      
             return await this.model.create(obj);
         } catch (error) {
-            console.error(`Error while creating`);
+            console.error(`Error while creating ${error.message}`);
         }
     }
 
