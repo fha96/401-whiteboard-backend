@@ -3,16 +3,17 @@
 
 const express = require('express');
 const {Post} = require('../models/index');
-const {Models} = require('../models/index'); 
+const {Models, User} = require('../models/index'); 
+const bearerAuth = require('../middlewares/bearerAuth');
 const router = express.Router();
 
 //get all posts
 //read with comments
-router.get('/post',getAllPosts);
+router.get('/post',bearerAuth(User),getAllPosts);
 //get one post
 router.get('/post/:id',getOnePost);
 //add post
-router.post('/post',addPost)
+router.post('/post',bearerAuth(User),addPost)
 //update post
 router.put('/post/:id',updatePost);
 // delete post
@@ -24,10 +25,6 @@ async function getAllPosts(req, res) {
     let allPosts = await Post.readWithComments(Models.commentModel);
     res.status(200).send(allPosts);
 }
-// async function getAllPosts(req, res) {
-//     let allPosts = await Post.read();
-//     res.status(200).send(allPosts);
-// }
 
 async function getOnePost(req, res) {
 let id = req.params.id;
