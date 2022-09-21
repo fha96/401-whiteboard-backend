@@ -19,12 +19,12 @@ const DATA_BASE_URL = process.env.DATABASE_URL || 'postgres://fahadzidan1@localh
 
  let sequelizeOptions = {
 
-    dialectOptions : {
-        ssl : {
-            require : true,
-            rejectUnauthorized: false
-        }
-    }
+    // dialectOptions : {
+    //     ssl : {
+    //         require : true,
+    //         rejectUnauthorized: false
+    //     }
+    // }
 
 };
 
@@ -37,6 +37,8 @@ const userModel = user(sequelize,DataTypes);
 
 postModel.hasMany(commentModel,{foreignKey: 'postID', sourceKey:'id'});
 commentModel.belongsTo(postModel,{foreignKey: 'postID', targetKey: 'id'});
+userModel.hasMany(commentModel,{foreignKey: 'userID', sourceKey:'id'});
+commentModel.belongsTo(userModel,{foreignKey: 'userID', targetKey: 'id'});
 
 
 const postCollection = new CommentRoutes(postModel);
@@ -48,5 +50,5 @@ module.exports = {
     Post:postCollection,
     Comment:commentCollection,
     User:userModel,
-    Models:{postModel, commentModel}
+    Models:{postModel, commentModel, userModel}
 }

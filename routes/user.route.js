@@ -3,13 +3,14 @@
 const router = require('express').Router();
 const {User} = require('../models/index');
 const bcrypt = require('bcrypt');
-const base64 = require('base-64');
+const basicAuth = require('../middlewares/basicAuth');
+const bearerAuth = require('../middlewares/bearerAuth');
 
 
 
 router.post('/signup',handleSignUp);
-router.post('/signin', handleSignIn);
-router.get('/user', getAllUsers);
+router.post('/signin', basicAuth(User), handleSignIn);
+router.get('/user',bearerAuth(User), getAllUsers);
 
 
 
@@ -28,30 +29,11 @@ async function handleSignUp(req, res) {
 }
 
 async function handleSignIn (req, res) {
-    let userData = req.headers.authorization.split(' ');
-    let encodedValue = userData.pop();
-    let [email, password] = base64.decode(encodedValue).split(':');
-    console.log(password, email);
-    const user = await User.findOne({where:{email}});
-
-    if(user) {
-        const sameOne = await bcrypt.compare(password, user.password);
-        console.log(sameOne);
-        if(sameOne) {
-            return res.status(200).send('Welcome !');
-        } else {
-            return res.status(401).send('Invalid Login');
-        }
-    } else {
-        return res.status(401).send('Invalid Login');
-    }
-
-    
-    
+    res.status(200).json(req.user);
 }
 
 async function getAllUsers(req, res) {
-    let allUsers = await User.read();
+    let allUsers = await User.findAll();
     res.status(200).send(allUsers);
 }
 

@@ -68,6 +68,15 @@ class CommentRoutes {
             
         }
     }
+    async CreateAndReadAllComments2(Model, Model2,obj,id) {
+        try {
+            await this.model.create(obj);
+            return await this.model.findAll({include:[Model, Model2],where:{postID:id}});
+        } catch (error) {
+            console.error(`Error while read All comments :${error.message}`);
+            
+        }
+    }
 
 }
 
