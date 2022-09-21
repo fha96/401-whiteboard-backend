@@ -13,7 +13,7 @@ router.get('/post',bearerAuth(User),getAllPosts);
 //get one post
 router.get('/post/:id',getOnePost);
 //add post
-router.post('/post',bearerAuth(User),addPost)
+router.post('/post',addPost);
 //update post
 router.put('/post/:id',updatePost);
 // delete post
