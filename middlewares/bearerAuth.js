@@ -11,7 +11,7 @@ module.exports = (userModel) => async(req, res, next) => {
     }).catch(error => next(`Invalid Login ${error}`))
     
 } else {
-    console.error(error.message);
+   next('Invalid Token');
 }
 
 }

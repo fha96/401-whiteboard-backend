@@ -4,12 +4,13 @@ const router = require('express').Router();
 const {User} = require('../models/index');
 const bcrypt = require('bcrypt');
 const basicAuth = require('../middlewares/basicAuth');
+const bearerAuth = require('../middlewares/bearerAuth');
 
 
 
 router.post('/signup',handleSignUp);
 router.post('/signin', basicAuth(User), handleSignIn);
-router.get('/user', getAllUsers);
+router.get('/user',bearerAuth(User), getAllUsers);
 
 
 
@@ -32,7 +33,7 @@ async function handleSignIn (req, res) {
 }
 
 async function getAllUsers(req, res) {
-    let allUsers = await User.read();
+    let allUsers = await User.findAll();
     res.status(200).send(allUsers);
 }
 

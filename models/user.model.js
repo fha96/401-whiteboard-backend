@@ -34,7 +34,7 @@ const UserModel = (sequelize, DataTypes) => {
             const sameOne = await bcrypt.compare(password, user.password);
             console.log(sameOne);
             if(sameOne) {
-                let newToken = jwt.sign(email,process.env.SECRET);
+                let newToken = jwt.sign({email:user.email},process.env.SECRET);
                 user.token = newToken;
                 return user;
             } else {
@@ -53,7 +53,7 @@ const UserModel = (sequelize, DataTypes) => {
     User.validateToken = async function (token) {
         let parsedToken = jwt.verify(token,process.env.SECRET); // this verify will get you back the email
         console.log('valid >>>>>>>', parsedToken);
-        const user = await this.findOne({where:{email:parsedToken}});
+        const user = await this.findOne({where:{email:parsedToken.email}});
         if(user) {
             return user;
         } else {

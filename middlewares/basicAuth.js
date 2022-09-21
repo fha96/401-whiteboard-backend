@@ -11,8 +11,6 @@ module.exports = (userModel) => async(req, res, next) => {
     userModel.authenticateBasic(email, password).then(resolve => {
          req.user = resolve;
          next();
-    }).catch(error => next('Invalid Login'))
-    
-   
+    }).catch(error => next('Invalid Login'));  
 
 }
