@@ -25,8 +25,10 @@ const UserModel = (sequelize, DataTypes) => {
             type: DataTypes.VIRTUAL   
         }
     });
-    User.authenticateBasic = async function(email, password) {
-         
+
+
+
+    User.authenticateBasic = async function(email, password) {     
     try {
         // 'this' because of this model
         const user = await this.findOne({where:{email}});
@@ -45,7 +47,6 @@ const UserModel = (sequelize, DataTypes) => {
             return 'Invalid Login'
         }   
     } catch (error) {
-        console.error(error.message);
         return 'Invalid Login';
     }
     }

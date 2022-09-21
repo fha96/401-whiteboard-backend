@@ -15,13 +15,13 @@ router.get('/comment',async(req, res) => {
     res.status(200).send(data);
 });
 
-// router.post('/comment/:postID',async(req, res) => {
-//     const id = req.params.postID;
-//     let obj = req.body;
-//     console.log(obj);
-//     let comments = await Comment.CreateAndReadAllComments(Models.postModel,obj,id);
-//     res.status(201).send(comments);
-// });
+router.post('/comment/:postID',async(req, res) => {
+    const id = req.params.postID;
+    let obj = req.body;
+    console.log(obj);
+    let comments = await Comment.CreateAndReadAllComments(Models.postModel,obj,id);
+    res.status(201).send(comments);
+});
 
 
 router.post('/comment/:postID/:userID',async(req, res) => {
