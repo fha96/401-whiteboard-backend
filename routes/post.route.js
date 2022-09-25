@@ -5,19 +5,20 @@ const express = require('express');
 const {Post} = require('../models/index');
 const {Models, User} = require('../models/index'); 
 const bearerAuth = require('../middlewares/bearerAuth');
+const acl = require('../middlewares/acl');
 const router = express.Router();
 
 //get all posts
 //read with comments
-router.get('/post',bearerAuth(User),getAllPosts);
+router.get('/post',bearerAuth(User),acl('read'),getAllPosts);
 //get one post
-router.get('/post/:id',getOnePost);
+router.get('/post/:id', getOnePost);
 //add post
-router.post('/post',addPost);
+router.post('/post',bearerAuth(User),acl('create'), addPost);
 //update post
-router.put('/post/:id',updatePost);
+router.put('/post/:id',bearerAuth(User), acl('update'), updatePost);
 // delete post
-router.delete('/post/:id',deletePost);
+router.delete('/post/:id',bearerAuth(User), acl('delete'), deletePost);
 
 
 // when you use sequelize don't forget about promises because its promise based

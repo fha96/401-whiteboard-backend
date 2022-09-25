@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const UserModel = (sequelize, DataTypes) => {
     
-   const User =  sequelize.define('user', {
+   const User =  sequelize.define('account', {
         userName: {
             type: DataTypes.STRING,
             allowNull: false,
