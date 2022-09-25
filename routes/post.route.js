@@ -45,9 +45,9 @@ async function addPost(req, res) {
 async function updatePost(req, res) {
     let id = req.params.id;
     let newData = req.body;
+    console.log(newData);
     await Post.update(newData,id);
-    let newPost = await Post.read(id);
-    res.status(202).send(newPost);
+   res.status(202).end();
 }
 
 async function deletePost(req, res) {
