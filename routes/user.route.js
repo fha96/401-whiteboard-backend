@@ -5,26 +5,35 @@ const {User} = require('../models/index');
 const bcrypt = require('bcrypt');
 const basicAuth = require('../middlewares/basicAuth');
 const bearerAuth = require('../middlewares/bearerAuth');
+const acl = require('../middlewares/acl');
 
 
 
 router.post('/signup',handleSignUp);
 router.post('/signin', basicAuth(User), handleSignIn);
-router.get('/user',bearerAuth(User), getAllUsers);
+router.get('/user',bearerAuth(User),acl('read'), getAllUsers);
 
+
+router.get('/he', async(req, res) => {
+let users = await User.findAll();
+})
 
 
 async function handleSignUp(req, res) {
     let data = req.body;
-    try{
-       data.password= await bcrypt.hash(data.password,5);
-       console.log(data);
-       let user =  await User.create(data);
-        if(user) {
-            res.status(200).end();
+    if(data.role){
+        try{
+           data.password= await bcrypt.hash(data.password,5);
+           console.log(data);
+           let user =  await User.create(data);
+            if(user) {
+                res.status(200).send('Account has been created successfully');
+            }
+        }catch (error){
+            res.status(409).send('User already exist');
         }
-    }catch (error){
-        res.status(409).send('User already exist');
+    } else{
+        res.status(500).send('Please select a role !');
     }
 }
 

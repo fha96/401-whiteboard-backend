@@ -7,6 +7,7 @@ module.exports = (userModel) => async(req, res, next) => {
     console.log('token >>>>>>', token);
     userModel.validateToken(token).then(resolve => {
          req.user = resolve;
+        //  console.log('req.user>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',req.user.capabilities);
          next();
     }).catch(error => next(`Invalid Login ${error}`))
     
