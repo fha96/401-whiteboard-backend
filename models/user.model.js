@@ -23,6 +23,20 @@ const UserModel = (sequelize, DataTypes) => {
         },
         token: {
             type: DataTypes.VIRTUAL   
+        },
+        role: {
+            type: DataTypes.ENUM('user', 'admin'),
+            allowNull: false
+        },
+        capabilities: {
+            type: DataTypes.VIRTUAL,
+            get: function () {
+                const acl = {
+                    user: ['read', 'create'],
+                    admin: ['read', 'create', 'update', 'delete']
+                }
+                return acl[this.role];
+            }
         }
     });
 
